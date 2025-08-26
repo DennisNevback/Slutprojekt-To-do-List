@@ -72,5 +72,19 @@ namespace TodoApi.Controllers
 
       return Ok(updateTodo);
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete([FromRoute] int id)
+    {
+      var todo = _context.Todos.FirstOrDefault(t => t.id == id);
+      if (todo == null)
+      {
+        return NotFound();
+      }
+      _context.Todos.Remove(todo);
+      _context.SaveChanges();
+
+      return NoContent();
+    }
   }
 }
