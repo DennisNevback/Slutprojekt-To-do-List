@@ -154,3 +154,4 @@ C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\refint\TodoApi
 C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\TodoApi.pdb
 C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\TodoApi.genruntimeconfig.cache
 C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\ref\TodoApi.dll
+C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\TodoApi.sourcelink.json

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Data;
 using Microsoft.EntityFrameworkCore;
+using TodoApi.Dtos.Todo;
+using TodoApi.Mappers;
 
 namespace TodoApi.Controllers
 {
@@ -33,6 +35,20 @@ namespace TodoApi.Controllers
       }
 
       return Ok(todo);
+    }
+
+    [HttpPost]
+    public IActionResult Create([FromBody] CreateTodoDto todoDto)
+    {
+      var todoModel = todoDto.ToCreateTodoDto();
+      _context.Todos.Add(todoModel);
+      _context.SaveChanges();
+
+      return CreatedAtAction(
+          nameof(GetById),          // Action som kan hämta objektet
+          new { id = todoModel.id },// route values
+          todoModel                 // objektet i responsen
+      );
     }
   }
 }
