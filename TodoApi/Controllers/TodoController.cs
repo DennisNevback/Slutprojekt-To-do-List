@@ -17,17 +17,17 @@ namespace TodoApi.Controllers
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-      var todos = _context.Todos.ToList();
+      var todos = await _context.Todos.ToListAsync();
 
       return Ok(todos);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById([FromRoute] int id)
+    public async Task<IActionResult> GetById([FromRoute] int id)
     {
-      var todo = _context.Todos.FirstOrDefault(t => t.id == id);
+      var todo = await _context.Todos.FirstOrDefaultAsync(t => t.id == id);
 
       if (todo == null)
       {
@@ -38,11 +38,11 @@ namespace TodoApi.Controllers
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateTodoDto todoDto)
+    public async Task<IActionResult> Create([FromBody] CreateTodoDto todoDto)
     {
       var todoModel = todoDto.ToCreateTodoDto();
-      _context.Todos.Add(todoModel);
-      _context.SaveChanges();
+      await _context.Todos.AddAsync(todoModel);
+      await _context.SaveChangesAsync();
 
       return CreatedAtAction(
           nameof(GetById),
@@ -52,10 +52,10 @@ namespace TodoApi.Controllers
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] UpdateTodoDto updateTodo)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTodoDto updateTodo)
     {
       //Find the correct row
-      var todo = _context.Todos.FirstOrDefault(t => t.id == id);
+      var todo = await _context.Todos.FirstOrDefaultAsync(t => t.id == id);
       if (todo == null)
       {
         return NotFound();
@@ -68,21 +68,21 @@ namespace TodoApi.Controllers
       todo.status = updateTodo.status;
       todo.created_at = updateTodo.created_at;
 
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       return Ok(updateTodo);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete([FromRoute] int id)
+    public async Task<IActionResult> Delete([FromRoute] int id)
     {
-      var todo = _context.Todos.FirstOrDefault(t => t.id == id);
+      var todo = await _context.Todos.FirstOrDefaultAsync(t => t.id == id);
       if (todo == null)
       {
         return NotFound();
       }
       _context.Todos.Remove(todo);
-      _context.SaveChanges();
+      await _context.SaveChangesAsync();
 
       return NoContent();
     }
