@@ -3,6 +3,7 @@ using TodoApi.Data;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Dtos.Todo;
 using TodoApi.Mappers;
+using TodoApi.Interfaces;
 
 namespace TodoApi.Controllers
 {
@@ -11,15 +12,17 @@ namespace TodoApi.Controllers
   public class TodoController : ControllerBase
   {
     private readonly ApplicationDBContext _context;
-    public TodoController(ApplicationDBContext context)
+    private readonly ITodoRepository _todoRepo;
+    public TodoController(ApplicationDBContext context, ITodoRepository todoRepo)
     {
+      _todoRepo = todoRepo;
       _context = context;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-      var todos = await _context.Todos.ToListAsync();
+      var todos = await _todoRepo.GetAllAsync();
 
       return Ok(todos);
     }
@@ -27,7 +30,7 @@ namespace TodoApi.Controllers
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-      var todo = await _context.Todos.FirstOrDefaultAsync(t => t.id == id);
+      var todo = await _todoRepo.GetByIdAsync(id);
 
       if (todo == null)
       {
@@ -41,8 +44,7 @@ namespace TodoApi.Controllers
     public async Task<IActionResult> Create([FromBody] CreateTodoDto todoDto)
     {
       var todoModel = todoDto.ToCreateTodoDto();
-      await _context.Todos.AddAsync(todoModel);
-      await _context.SaveChangesAsync();
+      await _todoRepo.CreateAsync(todoModel);
 
       return CreatedAtAction(
           nameof(GetById),
@@ -54,21 +56,11 @@ namespace TodoApi.Controllers
     [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTodoDto updateTodo)
     {
-      //Find the correct row
-      var todo = await _context.Todos.FirstOrDefaultAsync(t => t.id == id);
+      var todo = await _todoRepo.UpdateAsync(id, updateTodo);
       if (todo == null)
       {
         return NotFound();
       }
-      todo.user_id = updateTodo.user_id;
-      todo.title = updateTodo.title;
-      todo.description = updateTodo.description;
-      todo.due_date = updateTodo.due_date;
-      todo.priority = updateTodo.priority;
-      todo.status = updateTodo.status;
-      todo.created_at = updateTodo.created_at;
-
-      await _context.SaveChangesAsync();
 
       return Ok(updateTodo);
     }
@@ -76,13 +68,12 @@ namespace TodoApi.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-      var todo = await _context.Todos.FirstOrDefaultAsync(t => t.id == id);
+      var todo = await _todoRepo.DeleteAsync(id);
+
       if (todo == null)
       {
         return NotFound();
       }
-      _context.Todos.Remove(todo);
-      await _context.SaveChangesAsync();
 
       return NoContent();
     }
