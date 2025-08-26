@@ -1,6 +1,6 @@
 namespace TodoApi.Dtos.Todo
 {
-  public class CreateTodoDto
+  public class UpdateTodoDto
   {
     public required int user_id { get; set; }
     public required string title { get; set; }
@@ -10,6 +10,4 @@ namespace TodoApi.Dtos.Todo
     public string? status { get; set; }
     public DateTime? created_at { get; set; }
   }
-
-
 }

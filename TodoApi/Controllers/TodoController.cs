@@ -45,10 +45,32 @@ namespace TodoApi.Controllers
       _context.SaveChanges();
 
       return CreatedAtAction(
-          nameof(GetById),          // Action som kan hämta objektet
-          new { id = todoModel.id },// route values
-          todoModel                 // objektet i responsen
+          nameof(GetById),
+          new { id = todoModel.id },
+          todoModel
       );
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Update([FromRoute] int id, [FromBody] UpdateTodoDto updateTodo)
+    {
+      //Find the correct row
+      var todo = _context.Todos.FirstOrDefault(t => t.id == id);
+      if (todo == null)
+      {
+        return NotFound();
+      }
+      todo.user_id = updateTodo.user_id;
+      todo.title = updateTodo.title;
+      todo.description = updateTodo.description;
+      todo.due_date = updateTodo.due_date;
+      todo.priority = updateTodo.priority;
+      todo.status = updateTodo.status;
+      todo.created_at = updateTodo.created_at;
+
+      _context.SaveChanges();
+
+      return Ok(updateTodo);
     }
   }
 }
