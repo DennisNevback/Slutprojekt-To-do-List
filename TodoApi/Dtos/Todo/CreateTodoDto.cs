@@ -11,5 +11,4 @@ namespace TodoApi.Dtos.Todo
     public DateTime? created_at { get; set; }
   }
 
-
 }

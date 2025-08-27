@@ -22,6 +22,7 @@ namespace TodoApi.Repository
     {
       return await _context.Todos.FirstOrDefaultAsync(t => t.id == id);
     }
+
     public async Task<Todo> CreateAsync(Todo todoModel)
     {
       await _context.Todos.AddAsync(todoModel);
