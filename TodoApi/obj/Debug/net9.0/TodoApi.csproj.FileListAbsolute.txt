@@ -155,3 +155,6 @@ C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\TodoApi.pdb
 C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\TodoApi.genruntimeconfig.cache
 C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\ref\TodoApi.dll
 C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\obj\Debug\net9.0\TodoApi.sourcelink.json
+C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Csharp lexicon\Slutprojekt To-do List\TodoApi\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
