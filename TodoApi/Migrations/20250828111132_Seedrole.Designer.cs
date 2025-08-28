@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoApi.Data;
 
@@ -11,9 +12,11 @@ using TodoApi.Data;
 namespace TodoApi.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250828111132_Seedrole")]
+    partial class Seedrole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace TodoApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "be72b0a2-899f-49f2-934b-7b223b3ed72a",
+                            Id = "4d4e28f9-f753-44b3-92a0-d62e86cb32fe",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8a3d5c34-ccae-4712-af12-317f29a3bc6e",
+                            Id = "4e574330-2e60-4d7a-bbe2-571717d53b02",
                             Name = "user",
                             NormalizedName = "User"
                         });
