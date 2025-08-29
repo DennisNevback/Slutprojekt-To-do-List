@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TodoApi.Dtos.Todo;
 using TodoApi.Mappers;
 using TodoApi.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TodoApi.Controllers
 {
@@ -20,6 +21,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAll()
     {
       var todos = await _todoRepo.GetAllAsync();
