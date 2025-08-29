@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TodoApi.Data;
 using TodoApi.Repository;
 using TodoApi.Interfaces;
+using TodoApi.Service;
 using TodoApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -75,6 +76,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddControllers();
 
