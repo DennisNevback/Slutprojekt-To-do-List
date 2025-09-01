@@ -1,8 +1,7 @@
-namespace TodoApi.Dtos.Todo
+namespace TodoApi.Dtos.TodoUser
 {
-  public class CreateTodoDto
+  public class CreateTodoUserDto
   {
-    public required string user_id { get; set; }
     public required string title { get; set; }
     public string? description { get; set; }
     public DateTime? due_date { get; set; }

@@ -2,7 +2,7 @@ namespace TodoApi.Dtos.Todo
 {
   public class UpdateTodoDto
   {
-    public required int user_id { get; set; }
+    public required string user_id { get; set; }
     public required string title { get; set; }
     public string? description { get; set; }
     public DateTime? due_date { get; set; }
