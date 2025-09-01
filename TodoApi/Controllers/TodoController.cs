@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TodoApi.Controllers
 {
-  [Route("api/todo")]
+  [Route("api/todo/admin")]
   [ApiController]
   public class TodoController : ControllerBase
   {
@@ -21,7 +21,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpGet]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
     {
       var todos = await _todoRepo.GetAllAsync();
@@ -30,6 +30,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
       var todo = await _todoRepo.GetByIdAsync(id);
@@ -43,6 +44,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromBody] CreateTodoDto todoDto)
     {
       var todoModel = todoDto.ToCreateTodoDto();
@@ -56,6 +58,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTodoDto updateTodo)
     {
       var todo = await _todoRepo.UpdateAsync(id, updateTodo);
@@ -68,6 +71,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
       var todo = await _todoRepo.DeleteAsync(id);

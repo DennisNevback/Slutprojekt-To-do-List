@@ -54,7 +54,7 @@ namespace TodoApi.Controllers
               {
                 UserName = AppUser.UserName,
                 Email = AppUser.Email,
-                Token = _tokenService.CreateToken(AppUser)
+                Token = await _tokenService.CreateTokenAsync(AppUser)
               }
             );
           }
@@ -100,7 +100,7 @@ namespace TodoApi.Controllers
         {
           UserName = user.UserName,
           Email = user.Email,
-          Token = _tokenService.CreateToken(user)
+          Token = await _tokenService.CreateTokenAsync(user)
         }
       );
     }

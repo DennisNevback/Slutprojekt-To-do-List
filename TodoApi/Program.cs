@@ -96,6 +96,8 @@ builder.Services.AddAuthentication(options =>
 });
 
 
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -116,6 +118,33 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+// Seed admin
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Kontrollera att rollen Admin finns (eftersom HasData kanske inte körts)
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    var adminUser = await userManager.FindByEmailAsync("admin@example.com");
+    if (adminUser == null)
+    {
+        adminUser = new AppUser
+        {
+            UserName = "admin",
+            Email = "admin@example.com"
+        };
+        await userManager.CreateAsync(adminUser, "Admin123!@@");  // Lösenord
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

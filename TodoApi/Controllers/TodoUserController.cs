@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TodoApi.Controllers
 {
-  [Route("api/todo/user")]
+  [Route("api/todo/")]
   [ApiController]
   public class TodoUserController : ControllerBase
   {
@@ -37,6 +37,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetByIdUser([FromRoute] int id)
     {
       var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -56,6 +57,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateTodoUser([FromBody] CreateTodoUserDto todoDto)
     {
       var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -76,6 +78,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> UpdateTodoUser([FromRoute] int id, [FromBody] UpdateTodoUserDto updateTodo)
     {
       var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -94,6 +97,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteTodoUser([FromRoute] int id)
     {
       var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
