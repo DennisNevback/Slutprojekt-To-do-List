@@ -4,6 +4,9 @@ import Todos from "./components/Todos";
 import AddTodo from "./components/AddTodo"
 import DeleteTodo from "./components/DeleteTodo"
 import EditTodo from "./components/EditTodo"
+import Login from "./pages/Login"
+import Home from "./pages/Home"
+import Register from "./pages/Register"
 
 export default function App() {
   return (
@@ -13,6 +16,9 @@ export default function App() {
       </nav>
 
       <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/todos" element={<Todos />} />
         <Route path="/todos/:id" element={<Todo />} />
         <Route path="/todos/add" element={<AddTodo />} />
