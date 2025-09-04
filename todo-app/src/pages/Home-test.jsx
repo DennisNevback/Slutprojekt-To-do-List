@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import TodoCard from "../components/TodoCard"
+import AddTodo from "../components/AddTodo"
 
 
 export default function HomeTest() {
   const [todos, setTodos] = useState([]);
+  //har hand om att refresha listan av todos
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,7 +20,7 @@ export default function HomeTest() {
       .then((res) => res.json())
       .then(setTodos)
       .catch(console.error);
-  }, []);
+  }, [refresh]);
 
   // Apply dark mode on mount
   useEffect(() => {
@@ -34,25 +37,96 @@ export default function HomeTest() {
     setTodos(prev => [newTodo, ...prev]);
   };
 
-  const toggleTodo = (id) => {
-    setTodos(prev =>
-      prev.map(todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+  const toggleTodo = async (id) => {
+  const token = localStorage.getItem("token");
+
+  // 1. Hämta hela objektet
+  const res = await fetch(`http://localhost:5162/api/todo/${id}`, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Kunde inte hämta todo");
+    return;
+  }
+
+  const todo = await res.json();
+
+  // 2. Toggla mellan null och "completed"
+  const updatedTodo = {
+    ...todo,
+    status: todo.status === "completed" ? null : "completed",
   };
+
+  // 3. Skicka tillbaka PUT med hela objektet
+  const updateRes = await fetch(`http://localhost:5162/api/todo/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(updatedTodo),
+  });
+
+  if (!updateRes.ok) {
+    console.error("Kunde inte uppdatera todo");
+    return;
+  }
+
+  const result = await updateRes.json();
+  console.log("Uppdaterad todo:", result);
+  setRefresh(r => r + 1);
+};
+
 
   const deleteTodo = (id) => {
     setTodos(prev => prev.filter(todo => todo.id !== id));
   };
 
-  const editTodo = (id, updates) => {
-    setTodos(prev =>
-      prev.map(todo =>
-        todo.id === id ? { ...todo, ...updates } : todo
-      )
-    );
+  const editTodo = async (id) => {
+  const token = localStorage.getItem("token");
+
+  // 1. Hämta hela objektet
+  const res = await fetch(`http://localhost:5162/api/todo/${id}`, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Kunde inte hämta todo");
+    return;
+  }
+
+  const todo = await res.json();
+
+  // 2. Toggla mellan null och "completed"
+  const updatedTodo = {
+    ...todo,
+    status: todo.status === "completed" ? null : "completed",
   };
+
+  // 3. Skicka tillbaka PUT med hela objektet
+  const updateRes = await fetch(`http://localhost:5162/api/todo/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(updatedTodo),
+  });
+
+  if (!updateRes.ok) {
+    console.error("Kunde inte uppdatera todo");
+    return;
+  }
+
+  const result = await updateRes.json();
+  console.log("Uppdaterad todo:", result);
+  setRefresh(r => r + 1);
+};
 
   const sortedTodos = [...todos].sort((a, b) => {
   const priorityOrder = { high: 0, medium: 1, low: 2 };
@@ -104,7 +178,10 @@ export default function HomeTest() {
               )}
             </div>
             <div className="max-w-sm">
-              <p>Add todo here</p>
+              <AddTodo
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
             </div>
           </div>
 

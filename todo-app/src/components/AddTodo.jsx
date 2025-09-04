@@ -1,29 +1,42 @@
 import { useState } from "react";
 import * as todoApi from "../../api/todo";
 
-
-
-//Funkar bar som en egen sida just nu - skriv om till komponent.
-export default function AddTodo() {
+export default function AddTodo({refresh, setRefresh}) {
   const [title, setTitle] = useState("");
-  const [user_id, setUser_id] = useState("");
+  const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [priority, setPriority] = useState("");
   const [message, setMessage] = useState("");
+  const token = localStorage.getItem("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !user_id) {
-      setMessage("Fyll i både title och user_id");
+    if (!title || !priority) {
+      setMessage("Fyll i både title och priority");
       return;
     }
 
     try {
-      const newTodo = await todoApi.addTodo({ title, user_id, completed: false });
-      setMessage(`Todo "${newTodo.title}" skapad!`);
-      setTitle("");
-      setUser_id("");
+      await fetch(`http://localhost:5162/api/todo/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title: title,
+          description: description,
+          due_date: dueDate,
+          priority: priority,
+          status: null,
+          created_at: new Date().toISOString()
+        })
+      });
+      setRefresh(refresh + 1);
     } catch (err) {
       console.error(err);
       setMessage("Något gick fel...");
+      
     }
   };
 
@@ -38,11 +51,27 @@ export default function AddTodo() {
           placeholder="Titel"
         />
         <input
-          type="number"
-          value={user_id}
-          onChange={(e) => setUser_id(e.target.value)}
-          placeholder="user_id"
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
         />
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          placeholder="Due Date"
+        />
+        <select 
+          value={priority} 
+          onChange={(e) => setPriority(e.target.value)}
+        >
+          <option value="">Välj prioritet</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+
         <button type="submit">Lägg till</button>
       </form>
       {message && <p>{message}</p>}
