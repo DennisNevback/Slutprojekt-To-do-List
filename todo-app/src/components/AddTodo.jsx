@@ -3,8 +3,8 @@ import * as todoApi from "../../api/todo";
 
 export default function AddTodo({refresh, setRefresh}) {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [description, setDescription] = useState(null);
+  const [dueDate, setDueDate] = useState(null);
   const [priority, setPriority] = useState("");
   const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
@@ -18,7 +18,7 @@ export default function AddTodo({refresh, setRefresh}) {
     }
 
     try {
-      await fetch(`http://localhost:5162/api/todo/`, {
+      const res = await fetch(`http://localhost:5162/api/todo/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,6 +33,13 @@ export default function AddTodo({refresh, setRefresh}) {
           created_at: new Date().toISOString()
         })
       });
+
+      if (!res.ok) {
+        console.log("aydyayda")
+        console.log(res)
+        setMessage("Kunde inte lägga till todo...");
+        return; // stoppar här
+      }
       setRefresh(refresh + 1);
       setMessage("Todo added!");
       setShowForm(false);

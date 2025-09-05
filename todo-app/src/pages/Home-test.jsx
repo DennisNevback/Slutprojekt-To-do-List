@@ -130,7 +130,7 @@ export default function HomeTest() {
 };
 
   const sortedTodos = [...todos].sort((a, b) => {
-  const priorityOrder = { high: 0, medium: 1, low: 2 };
+  const priorityOrder = { High: 0, Medium: 1, Low: 2 };
 
   // Sortera först på priority
   if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
