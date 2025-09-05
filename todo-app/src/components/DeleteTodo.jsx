@@ -2,38 +2,43 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getTodo, deleteTodo } from "../../api/todo";
 
-export default function DeleteTodo() {
-  const { id } = useParams();
+export default function DeleteTodo({ id, refresh, setRefresh }) {
   const [todo, setTodo] = useState(null);
   const [message, setMessage] = useState("");
+  const token = localStorage.getItem("token");
   const navigate = useNavigate(); // för att redirecta efter delete
 
-  useEffect(() => {
-    getTodo(id)
-      .then(setTodo)
-      .catch((err) => setMessage("Kunde inte hämta todo"));
-  }, [id]);
 
-  const handleDelete = async () => {
+  const handleDelete = async (e) => {
     try {
-      await deleteTodo(id);
-      setMessage(`Todo "${todo.title}" borttagen!`);
-      // Redirect efter några sekunder, t.ex. tillbaka till listan
-      setTimeout(() => navigate("/todos"), 1000);
-    } catch (err) {
-      console.error(err);
-      setMessage("Något gick fel vid borttagning");
-    }
-  };
+      const res = await fetch(`http://localhost:5162/api/todo/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
 
-  if (!todo) return <p>Laddar...</p>;
+      console.log("Res:", res);
+      console.log("Delete response status:", res.status);
+
+      if (!res.ok) {
+        console.error("Något gick fel vid delete");
+        return;
+      }
+
+      setRefresh(r => r + 1);
+    }
+
+    catch (e) { 
+      console.log(e);
+    };
+  }
+
 
   return (
     <div>
-      <h2>{todo.title}</h2>
-      <p>Status: {todo.completed ? "Klar" : "Ej klar"}</p>
       <button onClick={handleDelete}>Ta bort</button>
-      {message && <p>{message}</p>}
     </div>
   );
 }

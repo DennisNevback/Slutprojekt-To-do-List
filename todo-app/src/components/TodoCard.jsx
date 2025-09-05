@@ -1,6 +1,7 @@
 import { useState } from "react";
+import DeleteTodo from "./DeleteTodo";
 
-export default function TodoCard({ todo, onToggle, onEdit, onDelete }) {
+export default function TodoCard({ todo, onToggle, onEdit, onDelete , refresh, setRefresh}) {
   const { id, title, description, due_date, priority, status } = todo;
 
   // Bestäm färg baserat på priority
@@ -41,12 +42,7 @@ export default function TodoCard({ todo, onToggle, onEdit, onDelete }) {
         >
           Edit
         </button>
-        <button
-          onClick={() => onDelete(id)}
-          className="px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
-        >
-          Delete
-        </button>
+        <DeleteTodo id={id} refresh={refresh} setRefresh={setRefresh}/>
       </div>
     </div>
   );

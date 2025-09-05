@@ -20,6 +20,7 @@ export default function HomeTest() {
       .then((res) => res.json())
       .then(setTodos)
       .catch(console.error);
+    console.log(refresh);
   }, [refresh]);
 
   // Apply dark mode on mount
@@ -168,6 +169,8 @@ export default function HomeTest() {
                     onToggle={toggleTodo}
                     onEdit={editTodo}
                     onDelete={deleteTodo}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
                   />
                 ))
               ) : (
@@ -198,6 +201,8 @@ export default function HomeTest() {
                       onToggle={toggleTodo}
                       onEdit={editTodo}
                       onDelete={deleteTodo}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
                     />
                   ))
                 ) : (
