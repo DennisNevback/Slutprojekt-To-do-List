@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import TodoCard from "../components/TodoCard"
 import AddTodo from "../components/AddTodo"
+import Logout from "../components/Logout"
 
 
-export default function HomeTest() {
+export default function Home() {
   const [todos, setTodos] = useState([]);
   //har hand om att refresha listan av todos
   const [refresh, setRefresh] = useState(0);
@@ -147,7 +148,9 @@ export default function HomeTest() {
   const completedTodos = sortedTodos.filter(todo => todo.status);
 
   return (
-    <div className="min-h-screen w-screen bg-background text-foreground">
+    <div className="relative min-h-screen w-screen bg-background text-foreground">
+      <Logout className="absolute right-0"/>
+
       <div className="container mx-auto px-6 py-8 w-screen">
         {/* Header */}
         <div className="text-center mb-8">

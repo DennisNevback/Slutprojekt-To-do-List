@@ -74,7 +74,7 @@ export default function EditTodo({ id, refresh, setRefresh }) {
 
   return (
     <div className="relative inline-block">
-  <button
+ <button
   onClick={async () => {
     const todoData = await fetchTodo();
     if (todoData) {
@@ -86,11 +86,11 @@ export default function EditTodo({ id, refresh, setRefresh }) {
       setCreated_at(todoData.created_at || "");
       setUser_id(todoData.user_id || "");
     }
-    setShowForm(true);
+    setShowForm(!showForm);
   }}
-  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+  className="bg-transparent p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors scale-75"
 >
-  <PencilIcon className="w-5 h-5" />
+  <PencilIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
 </button>
 
   {showForm && (

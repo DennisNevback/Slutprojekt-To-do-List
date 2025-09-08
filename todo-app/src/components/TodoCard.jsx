@@ -46,7 +46,7 @@ export default function TodoCard({ todo, onToggle, onEdit, onDelete , refresh, s
       </div>
 
       {/* Right: Buttons (visas på hover) */}
-      <div className="opacity-0 group-hover:opacity-100 absolute bottom-2 right-2 flex space-x-2 transition-opacity z-50">
+      <div className="opacity-0 group-hover:opacity-100 absolute bottom-0 right-0 flex space-x-0 transition-opacity z-50">
         <EditTodo id={id} refresh={refresh} setRefresh={setRefresh}/>
         <DeleteTodo id={id} refresh={refresh} setRefresh={setRefresh}/>
       </div>

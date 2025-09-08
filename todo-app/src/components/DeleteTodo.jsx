@@ -40,7 +40,7 @@ export default function DeleteTodo({ id, refresh, setRefresh }) {
 
   return (
     <div>
-      <button onClick={handleDelete} className="p-0 m-0 border-0 bg-transparent focus:outline-none">
+      <button onClick={handleDelete} className="p-0 m-0 border-0 bg-transparent focus:outline-none scale-75">
         <TrashIcon 
           className="w-5 h-5 text-red-600 hover:text-red-800" 
         />
