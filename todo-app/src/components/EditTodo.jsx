@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateTodo } from "../../api/todo";
+import { PencilIcon } from '@heroicons/react/24/solid';
 
 export default function EditTodo({ id, refresh, setRefresh }) {
   const token = localStorage.getItem("token");
@@ -89,12 +90,12 @@ export default function EditTodo({ id, refresh, setRefresh }) {
   }}
   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
 >
-  Edit
+  <PencilIcon className="w-5 h-5" />
 </button>
 
   {showForm && (
     <div className="absolute left-0 mt-2 bg-white dark:bg-black p-4 rounded-lg shadow-lg z-50 min-w-[300px]">
-      <h2 className="text-lg font-semibold mb-2">Redigera Todo</h2>
+      <h2 className="text-lg font-semibold mb-2">Edit Todo</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
           type="text"

@@ -51,38 +51,51 @@ export default function Register() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h1>Register</h1>
-      <form onSubmit={handleRegister}>
+  <div className="flex items-center justify-center min-h-screen w-screen bg-gray-900">
+    <div className="w-full max-w-sm bg-gray-800 rounded-2xl shadow-lg p-6">
+      <h1 className="text-2xl font-bold text-center text-white mb-6">Register</h1>
+      <form onSubmit={handleRegister} className="flex flex-col space-y-4">
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button type="submit">Register</button>
-      </form>
-      <p>Already a user? Log in instead</p>
-      <Link to="/">
-        <button style={{ padding: "10px 20px", marginTop: "10px" }}>
-          Login
+        <button
+          type="submit"
+          className="w-full py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors"
+        >
+          Register
         </button>
-      </Link>
-      
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      
+      </form>
+
+      <p className="mt-4 text-center text-gray-400">
+        Already a user?{" "}
+        <Link to="/" className="text-blue-500 hover:underline">
+          Log in instead
+        </Link>
+      </p>
+
+      {error && (
+        <p className="mt-4 text-center text-sm text-red-400">{error}</p>
+      )}
     </div>
-  );
+  </div>
+);
+
 }

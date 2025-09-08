@@ -6,7 +6,6 @@ import DeleteTodo from "./components/DeleteTodo"
 import EditTodo from "./components/EditTodo"
 import Login from "./pages/Login"
 import Home from "./pages/Home"
-import Home2 from "./pages/Home-test"
 import Register from "./pages/Register"
 import "./App.css";
 
@@ -16,7 +15,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/test" element={<Home2 />} />
         <Route path="/register" element={<Register />} />
         <Route path="/todos" element={<Todos />} />
         <Route path="/todos/:id" element={<Todo />} />

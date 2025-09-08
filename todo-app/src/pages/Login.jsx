@@ -49,31 +49,45 @@ export default function Login() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h1>Log in</h1>
-      <form onSubmit={handleLogin}>
+  <div className="flex items-center justify-center min-h-screen w-screen bg-gray-900">
+    <div className="w-full max-w-sm bg-gray-800 rounded-2xl shadow-lg p-6">
+      <h1 className="text-2xl font-bold text-center text-white mb-6">Log in</h1>
+      <form onSubmit={handleLogin} className="flex flex-col space-y-4">
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button type="submit">Log in</button>
-        <Link to="/register">
-          <button style={{ padding: "10px 20px", marginTop: "10px" }}>
+        <button
+          type="submit"
+          className="w-full py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors"
+        >
+          Log in
+        </button>
+        <Link to="/register" className="w-full">
+          <button
+            type="button"
+            className="w-full py-2 rounded-lg bg-gray-600 text-white font-semibold hover:bg-gray-700 transition-colors"
+          >
             Register
           </button>
         </Link>
       </form>
-      
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      
+
+      {error && (
+        <p className="mt-4 text-center text-sm text-red-400">{error}</p>
+      )}
     </div>
-  );
+  </div>
+);
+
 }

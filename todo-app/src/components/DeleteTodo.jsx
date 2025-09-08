@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getTodo, deleteTodo } from "../../api/todo";
 
+import { TrashIcon } from '@heroicons/react/24/solid';
+
 export default function DeleteTodo({ id, refresh, setRefresh }) {
   const [todo, setTodo] = useState(null);
   const [message, setMessage] = useState("");
@@ -38,7 +40,11 @@ export default function DeleteTodo({ id, refresh, setRefresh }) {
 
   return (
     <div>
-      <button onClick={handleDelete}>Ta bort</button>
+      <button onClick={handleDelete} className="p-0 m-0 border-0 bg-transparent focus:outline-none">
+        <TrashIcon 
+          className="w-5 h-5 text-red-600 hover:text-red-800" 
+        />
+      </button>
     </div>
   );
 }
