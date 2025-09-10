@@ -6,17 +6,17 @@ export default function TodoCard({ todo, onToggle, onEdit, onDelete , refresh, s
   const { id, title, description, due_date, priority, status } = todo;
 
   // Bestäm färg baserat på priority
-  const bgColor = priority === "High"
-  ? "bg-red-200 dark:bg-red-800"
+  const borderColor = priority === "High"
+  ? "border-red-950 dark:border-red-950"
   : priority === "Medium"
-    ? "bg-yellow-200 dark:bg-yellow-800"
+    ? "border-yellow-950 dark:border-yellow-950"
     : priority === "Low"
-      ? "bg-green-200 dark:bg-green-800"
-      : "bg-green-100 dark:bg-green-700";
+      ? "border-green-950 dark:border-green-950"
+      : "border-green-950 dark:border-green-950";
 
   return (
     <div
-      className={`flex items-start justify-between p-4 rounded-lg ${bgColor} relative group`}
+      className={`flex items-start justify-between p-4 rounded-lg bg-gray-900 border-1 ${borderColor} relative group`}
     >
       {/* Left: Checkbox */}
       <label className="relative inline-flex items-center cursor-pointer">
@@ -26,7 +26,7 @@ export default function TodoCard({ todo, onToggle, onEdit, onDelete , refresh, s
           onChange={() => onToggle(id)}
           className="sr-only peer"
         />
-        <div className="w-5 h-5 rounded-full border border-gray-400 peer-checked:bg-blue-500 bg-black peer-checked:border-blue-600 transition-colors mr-2"></div>
+        <div className="w-5 h-5 rounded-full border border-gray-400 peer-checked:bg-gray-500 bg-gray-800 peer-checked:border-gray-800 transition-colors mr-2"></div>
       </label>
 
       {/* Middle: Title & Description */}

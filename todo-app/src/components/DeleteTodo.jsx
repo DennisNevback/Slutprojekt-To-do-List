@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { TrashIcon } from '@heroicons/react/24/solid';
 
 export default function DeleteTodo({ id, refresh, setRefresh }) {
   const [showConfirm, setShowConfirm] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef(null);
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
@@ -23,49 +26,61 @@ export default function DeleteTodo({ id, refresh, setRefresh }) {
       }
 
       setRefresh(r => r + 1);
-      setShowConfirm(false); // stäng popup
+      setShowConfirm(false);
     } catch (e) {
       console.error(e);
     }
   }
 
+  // Beräkna position för popupen baserat på knappen
+  useEffect(() => {
+    if (showConfirm && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.top + window.scrollY - 8, // justera efter behov
+        left: rect.left + window.scrollX,
+      });
+    }
+  }, [showConfirm]);
+
   return (
     <div className="relative">
-  <button
-    onClick={() => setShowConfirm(true)}
-    className="p-0 m-0 border-0 bg-transparent focus:outline-none scale-75 z-40"
-  >
-    <TrashIcon className="w-5 h-5 text-red-600 hover:text-red-800" />
-  </button>
+      <button
+        ref={buttonRef}
+        onClick={() => setShowConfirm(true)}
+        className="p-0 m-0 border-0 bg-transparent focus:outline-none scale-75 z-40"
+      >
+        <TrashIcon className="w-5 h-5 text-red-600 hover:text-red-800" />
+      </button>
 
-  {showConfirm && (
-    <div
-      className="absolute z-50 left-0 -top-8 bg-white dark:bg-black p-4 rounded-lg shadow-lg"
-      style={{
-        minWidth: "200px",
-        width: "100%", // fyll hela containerns bredd
+      {showConfirm && createPortal(
+        <div
+          className="absolute z-50 bg-white dark:bg-black p-4 rounded-lg shadow-lg"
+          style={{
+            minWidth: "200px",
+            top: position.top,
+            left: position.left,
           }}
-        onMouseLeave={() => setShowConfirm(false)}
-    >
-      <p className="mb-2">Are you sure you want to delete this todo?</p>
-      <div className="flex justify-between gap-2">
-        <button
-          onClick={() => setShowConfirm(false)}
-          className="px-2 py-1 bg-black rounded hover:bg-gray-400 text-white"
+          onMouseLeave={() => setShowConfirm(false)}
         >
-          No
-        </button>
-        <button
-          onClick={handleDelete}
-          className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
-        >
-          Yes
-        </button>
-  </div>
-</div>
-  )}
-</div>
-
-
+          <p className="mb-2">Are you sure you want to delete this todo?</p>
+          <div className="flex justify-between gap-2">
+            <button
+              onClick={() => setShowConfirm(false)}
+              className="px-2 py-1 bg-black rounded hover:bg-gray-400 text-white"
+            >
+              No
+            </button>
+            <button
+              onClick={handleDelete}
+              className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Yes
+            </button>
+          </div>
+        </div>,
+        document.body // Portal renderas direkt i body
+      )}
+    </div>
   );
 }

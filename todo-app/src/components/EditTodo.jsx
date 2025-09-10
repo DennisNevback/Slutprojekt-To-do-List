@@ -95,7 +95,6 @@ export default function EditTodo({ id, refresh, setRefresh }) {
 
   {showForm && (
         <div className="absolute right-15 -top-10 mt-2 bg-white dark:bg-black p-4 rounded-lg shadow-lg z-50 min-w-[300px]"
-        onMouseLeave={() => setShowForm(false)}
         >
       <h2 className="text-lg font-semibold mb-2">Edit Todo</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2 z-51">

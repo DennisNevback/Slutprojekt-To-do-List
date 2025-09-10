@@ -163,7 +163,7 @@ export default function Home() {
           {/* Left Side - Tasks (spans 2 columns) */}
           <div className="col-span-2 space-y-4">
             <h2 className="text-lg font-semibold text-foreground mb-4">Tasks ({incompleteTodos.length})</h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 bg-muted/20 rounded-xl p-4 border border-border/50">
               {incompleteTodos.length > 0 ? (
                 incompleteTodos.map((todo, index) => (
                   <TodoCard
