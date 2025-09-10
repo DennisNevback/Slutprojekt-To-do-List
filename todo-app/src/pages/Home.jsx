@@ -8,9 +8,9 @@ export default function Home() {
   const [todos, setTodos] = useState([]);
   //har hand om att refresha listan av todos
   const [refresh, setRefresh] = useState(0);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     fetch("http://localhost:5162/api/todo", {
       method: "GET",
       headers: {
@@ -149,7 +149,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen w-screen bg-background text-foreground">
-      <Logout className="absolute right-0"/>
+      <Logout/>
 
       <div className="container mx-auto px-6 py-8 w-screen">
         {/* Header */}
@@ -159,7 +159,7 @@ export default function Home() {
         </div>
 
         {/* Two Column Layout */}
-        <div className="grid grid-cols-3 gap-6 items-start">
+        <div className="grid grid-cols-3 gap-6 items-start ">
           {/* Left Side - Tasks (spans 2 columns) */}
           <div className="col-span-2 space-y-4">
             <h2 className="text-lg font-semibold text-foreground mb-4">Tasks ({incompleteTodos.length})</h2>
@@ -192,7 +192,7 @@ export default function Home() {
           </div>
 
           {/* Right Column - Completed todos (darker) */}
-          <div className="space-y-4">
+          <div className="space-y-4 max-h-[60vh] overflow-hidden hover:overflow-auto scrollbar-thin scrollbar-thumb-gray-500">
             <h2 className="text-lg font-semibold text-foreground mb-4">Completed ({completedTodos.length})</h2>
             <div className="bg-muted/20 rounded-xl p-4 border border-border/50 opacity-40 hover:opacity-90">
               <div className="space-y-3">
