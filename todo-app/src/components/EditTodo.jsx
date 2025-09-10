@@ -94,9 +94,11 @@ export default function EditTodo({ id, refresh, setRefresh }) {
 </button>
 
   {showForm && (
-    <div className="absolute left-0 mt-2 bg-white dark:bg-black p-4 rounded-lg shadow-lg z-50 min-w-[300px]">
+        <div className="absolute right-15 -top-10 mt-2 bg-white dark:bg-black p-4 rounded-lg shadow-lg z-50 min-w-[300px]"
+        onMouseLeave={() => setShowForm(false)}
+        >
       <h2 className="text-lg font-semibold mb-2">Edit Todo</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 z-51">
         <input
           type="text"
           value={title}
@@ -110,7 +112,7 @@ export default function EditTodo({ id, refresh, setRefresh }) {
           onChange={(e) => setDescription(e.target.value)}
           placeholder={fetchedTodo?.description || ""}
           className="border rounded px-2 py-1"
-        />
+            />
         <input
           type="date"
           value={dueDate || (fetchedTodo?.due_date ? fetchedTodo.due_date.split("T")[0] : "")}

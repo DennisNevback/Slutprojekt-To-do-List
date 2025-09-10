@@ -40,18 +40,18 @@ export default function DeleteTodo({ id, refresh, setRefresh }) {
 
   {showConfirm && (
     <div
-      className="absolute z-50 bg-white dark:bg-black p-4 rounded-lg shadow-lg"
+      className="absolute z-50 left-0 -top-8 bg-white dark:bg-black p-4 rounded-lg shadow-lg"
       style={{
-        bottom: "5%", // just under the button
-        left: "0",
         minWidth: "200px",
-      }}
+        width: "100%", // fyll hela containerns bredd
+          }}
+        onMouseLeave={() => setShowConfirm(false)}
     >
       <p className="mb-2">Are you sure you want to delete this todo?</p>
       <div className="flex justify-between gap-2">
         <button
           onClick={() => setShowConfirm(false)}
-          className="px-2 py-1 bg-black rounded hover:bg-gray-400"
+          className="px-2 py-1 bg-black rounded hover:bg-gray-400 text-white"
         >
           No
         </button>
@@ -61,8 +61,8 @@ export default function DeleteTodo({ id, refresh, setRefresh }) {
         >
           Yes
         </button>
-      </div>
-    </div>
+  </div>
+</div>
   )}
 </div>
 

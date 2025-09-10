@@ -41,7 +41,13 @@ export default function TodoCard({ todo, onToggle, onEdit, onDelete , refresh, s
       </div>
       <div className="flex-1 self-start ml-auto absolute right-3">
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-          Due: {new Date(due_date).toLocaleDateString()}
+          {
+            new Date(due_date).toLocaleDateString("sv-SE", {
+              weekday: "short",
+              day: "numeric",
+              month: "short"
+            })
+          }
         </p>
       </div>
 
