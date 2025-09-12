@@ -51,7 +51,7 @@ export default function Register() {
   };
 
   return (
-  <div className="flex items-center justify-center min-h-screen w-screen bg-gray-900">
+  <div className="flex items-center justify-center min-h-screen w-screen bg-black">
     <div className="w-full max-w-sm bg-gray-800 rounded-2xl shadow-lg p-6">
       <h1 className="text-2xl font-bold text-center text-white mb-6">Register</h1>
       <form onSubmit={handleRegister} className="flex flex-col space-y-4">
